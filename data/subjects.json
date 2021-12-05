@@ -1,0 +1,42 @@
+[
+  {
+    "subject_id": "LAW158",
+    "subject_name": "Law And Startup"
+  },
+  {
+    "subject_id": "POS102",
+    "subject_name": "Marxism"
+  },
+  {
+    "subject_id": "POS103",
+    "subject_name": "Ho Chi Minh Ideal"
+  },
+  {
+    "subject_id": "MAT105",
+    "subject_name": "Probability And Statistics"
+  },
+  {
+    "subject_id": "COS120",
+    "subject_name": "Data Structures And Algorithms"
+  },
+  {
+    "subject_id": "CMP172",
+    "subject_name": "Computer Networks"
+  },
+  {
+    "subject_id": "CMP184",
+    "subject_name": "System Analysis And Design"
+  },
+  {
+    "subject_id": "CMP223",
+    "subject_name": "Web Programming"
+  },
+  {
+    "subject_id": "COS122",
+    "subject_name": "Database And Database Management"
+  },
+  {
+    "subject_id": "PSY101",
+    "subject_name": "Psychology"
+  }
+]
