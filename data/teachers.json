@@ -1,0 +1,72 @@
+[
+  {
+    "teacher_id": "T001",
+    "teacher_first_name": "Hieu",
+    "teacher_last_name": "Le",
+    "email": "lehieu@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T002",
+    "teacher_first_name": "Johny",
+    "teacher_last_name": "Dang",
+    "email": "jondang@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T003",
+    "teacher_first_name": "Khoa",
+    "teacher_last_name": "Pug",
+    "email": "khoapug@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T004",
+    "teacher_first_name": "Vuong",
+    "teacher_last_name": "Pham",
+    "email": "vuongpham@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T005",
+    "teacher_first_name": "Phong",
+    "teacher_last_name": "Le",
+    "email": "phongle@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T006",
+    "teacher_first_name": "Big",
+    "teacher_last_name": "Mike",
+    "email": "bigmikefight@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T007",
+    "teacher_first_name": "Jack",
+    "teacher_last_name": "Five",
+    "email": "jackfivefackht@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T008",
+    "teacher_first_name": "Jack",
+    "teacher_last_name": "Ma",
+    "email": "jackmafackht@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T009",
+    "teacher_first_name": "Elon",
+    "teacher_last_name": "Muck",
+    "email": "elonmuckflonht@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  },
+  {
+    "teacher_id": "T010",
+    "teacher_first_name": "Tim",
+    "teacher_last_name": "Cooker",
+    "email": "timcookerfimht@gmail.com",
+    "password": "76be0d1988e8d792a2647c86b2c872ef"
+  }
+]
