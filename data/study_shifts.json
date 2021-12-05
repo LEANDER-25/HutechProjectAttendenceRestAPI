@@ -1,0 +1,218 @@
+[
+  {
+    "lession_id": "1",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "2",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "3",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "1",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "2",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "3",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "1",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "2",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "3",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "1",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "2",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "3",
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "4",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "5",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "6",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "4",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "5",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "6",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "4",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "5",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "6",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "4",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "5",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "6",
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "7",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "8",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "9",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "LAW158"
+  },
+  {
+    "lession_id": "7",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "8",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "9",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS102"
+  },
+  {
+    "lession_id": "7",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "8",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "9",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS103"
+  },
+  {
+    "lession_id": "7",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "8",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "MAT105"
+  },
+  {
+    "lession_id": "9",
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "MAT105"
+  }
+]
