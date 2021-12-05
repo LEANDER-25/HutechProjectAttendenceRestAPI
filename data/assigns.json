@@ -1,0 +1,62 @@
+[
+  {
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "LAW158"
+  },
+  {
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS102"
+  },
+  {
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "POS103"
+  },
+  {
+    "class_id": "18DTHQA1",
+    "course_id": "1",
+    "subject_id": "MAT105"
+  },
+  {
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "LAW158"
+  },
+  {
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS102"
+  },
+  {
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "POS103"
+  },
+  {
+    "class_id": "18DTHQA2",
+    "course_id": "2",
+    "subject_id": "MAT105"
+  },
+  {
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "LAW158"
+  },
+  {
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS102"
+  },
+  {
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "POS103"
+  },
+  {
+    "class_id": "18DTHQA3",
+    "course_id": "3",
+    "subject_id": "MAT105"
+  }
+]
