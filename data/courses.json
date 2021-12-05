@@ -1,0 +1,98 @@
+[
+  {
+    "course_id": "1",
+    "subject_id": "LAW158",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T001"
+  },
+  {
+    "course_id": "2",
+    "subject_id": "LAW158",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T001"
+  },
+  {
+    "course_id": "3",
+    "subject_id": "LAW158",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T002"
+  },
+  {
+    "course_id": "1",
+    "subject_id": "POS102",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T003"
+  },
+  {
+    "course_id": "2",
+    "subject_id": "POS102",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T003"
+  },
+  {
+    "course_id": "3",
+    "subject_id": "POS102",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T004"
+  },
+  {
+    "course_id": "1",
+    "subject_id": "POS103",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T005"
+  },
+  {
+    "course_id": "2",
+    "subject_id": "POS103",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T005"
+  },
+  {
+    "course_id": "3",
+    "subject_id": "POS103",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T006"
+  },
+  {
+    "course_id": "1",
+    "subject_id": "MAT105",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T007"
+  },
+  {
+    "course_id": "2",
+    "subject_id": "MAT105",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T007"
+  },
+  {
+    "course_id": "3",
+    "subject_id": "MAT105",
+    "point": "3",
+    "semester": "1",
+    "year": "1",
+    "teacher_id": "T008"
+  }
+]
