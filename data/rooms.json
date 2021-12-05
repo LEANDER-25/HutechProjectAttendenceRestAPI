@@ -1,0 +1,82 @@
+﻿[
+  {
+    "room_id": "B.05.01",
+    "room_name": "Phòng 1 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.02",
+    "room_name": "Phòng 2 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.03",
+    "room_name": "Phòng 3 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.04",
+    "room_name": "Phòng 4 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.05",
+    "room_name": "Phòng 5 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.06",
+    "room_name": "Phòng 6 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.07",
+    "room_name": "Phòng 7 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.08",
+    "room_name": "Phòng 8 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.09",
+    "room_name": "Phòng 9 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.05.10",
+    "room_name": "Phòng 10 lầu 5 dãy B"
+  },
+  {
+    "room_id": "B.06.01",
+    "room_name": "Phòng 1 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.02",
+    "room_name": "Phòng 2 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.03",
+    "room_name": "Phòng 3 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.04",
+    "room_name": "Phòng 4 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.05",
+    "room_name": "Phòng 5 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.06",
+    "room_name": "Phòng 6 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.07",
+    "room_name": "Phòng 7 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.08",
+    "room_name": "Phòng 8 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.09",
+    "room_name": "Phòng 9 lầu 6 dãy B"
+  },
+  {
+    "room_id": "B.06.10",
+    "room_name": "Phòng 10 lầu 6 dãy B"
+  }
+]
