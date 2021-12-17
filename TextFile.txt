@@ -1,0 +1,2 @@
+﻿Scaffold-DbContext -provider Microsoft.EntityFrameworkCore.SqlServer -connection "Data Source=LAPTOP-VGNL1UAA;Initial Catalog=AttendenceDB;User Id=CommandAPI;Password=01679751807Ph" -OutputDir "Models" -ContextDir "DBContext" -DataAnnotations -f
+Scaffold-DbContext -provider Microsoft.EntityFrameworkCore.SqlServer -connection "Data Source=(local);Initial Catalog=AttendenceDB;Trusted_connection=yes" -OutputDir "Models" -ContextDir "DBContext" -DataAnnotations -f
