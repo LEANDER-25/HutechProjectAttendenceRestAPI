@@ -30,6 +30,8 @@ namespace RESTAPIRNSQLServer.Models
         [Column("cur_location")]
         [StringLength(500)]
         public string CurLocation { get; set; }
+        [Column("created_at", TypeName = "datetime")]
+        public DateTime CreatedAt { get; set; }
 
         [ForeignKey("SubjectId,CourseId,ClassId,ScheduleId")]
         [InverseProperty("CheckIns")]
