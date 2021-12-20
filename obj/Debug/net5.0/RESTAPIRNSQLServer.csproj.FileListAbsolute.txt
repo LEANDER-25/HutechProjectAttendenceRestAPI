@@ -66,3 +66,4 @@ D:\Docments\DoAn\ReactNativeProjects\CheckAttendence\Server\RESTAPIRNSQLServer\o
 D:\Docments\DoAn\ReactNativeProjects\CheckAttendence\Server\RESTAPIRNSQLServer\obj\Debug\net5.0\RESTAPIRNSQLServer.genruntimeconfig.cache
 D:\Docments\DoAn\ReactNativeProjects\CheckAttendence\Server\RESTAPIRNSQLServer\bin\Debug\net5.0\Castle.Core.dll
 D:\Docments\DoAn\ReactNativeProjects\CheckAttendence\Server\RESTAPIRNSQLServer\bin\Debug\net5.0\Moq.dll
+D:\Docments\DoAn\ReactNativeProjects\CheckAttendence\Server\RESTAPIRNSQLServer\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

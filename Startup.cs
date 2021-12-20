@@ -12,6 +12,12 @@ using System;
 using Newtonsoft.Json.Serialization;
 using RESTAPIRNSQLServer.IServices;
 using RESTAPIRNSQLServer.Services;
+using RESTAPIRNSQLServer.Services.SystemServices;
+using RESTAPIRNSQLServer.Applications.System;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 namespace RESTAPIRNSQLServer
 {
@@ -29,22 +35,53 @@ namespace RESTAPIRNSQLServer
         {
 
             services.AddControllers();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "RESTAPIRNSQLServer", Version = "v1" });
             });
+
             services.AddDbContext<AttendenceDBContext>(
                 opt => opt.UseSqlServer(Configuration.GetConnectionString("LocalConnection"))
             );
+
             services.AddControllers().AddNewtonsoftJson(
                 s =>
                 {
                     s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 }
             );
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<ILessonService, LessonServices>();
+            var jwtSection = Configuration.GetSection("JWTSettings");
+            services.Configure<JWTSettings>(jwtSection);
+
+            var appSettings = jwtSection.Get<JWTSettings>();
+            var key = Encoding.ASCII.GetBytes(appSettings.SecretKey);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+            services.AddAuthorization();
+
+            services.AddScoped<ILessonService, LessonService>();
+            services.AddScoped<IGatewayService, GatewayService>();
 
         }
 
@@ -62,6 +99,7 @@ namespace RESTAPIRNSQLServer
             app.UseStaticFiles();
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

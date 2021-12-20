@@ -12,12 +12,12 @@ using System.Threading.Tasks;
 
 namespace RESTAPIRNSQLServer.Services
 {
-    public class LessonServices : ILessonService
+    public class LessonService : ILessonService
     {
         private readonly AttendenceDBContext _context;
         private readonly IMapper _mapper;
 
-        public LessonServices(AttendenceDBContext context, IMapper mapper)
+        public LessonService(AttendenceDBContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
