@@ -7,11 +7,12 @@ using RESTAPIRNSQLServer.IServices;
 using RESTAPIRNSQLServer.Services;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace RESTAPIRNSQLServer.Services
-{
+{    
     public class LessonService : ILessonService
     {
         private readonly AttendenceDBContext _context;

@@ -49,6 +49,7 @@ namespace RESTAPIRNSQLServer
                 s =>
                 {
                     s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                    s.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 }
             );
 
@@ -82,6 +83,7 @@ namespace RESTAPIRNSQLServer
 
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<IGatewayService, GatewayService>();
+            services.AddScoped<IScheduleService, ScheduleService>();
 
         }
 
