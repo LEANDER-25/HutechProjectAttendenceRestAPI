@@ -115,11 +115,9 @@ namespace RESTAPIRNSQLServer.Services
             }
 
             //Find class which student registered
-            var classId = await _context.MainClasses.Where(
-                c => c.StudentId == studentId
-            ).Select(c => c.ClassId).FirstOrDefaultAsync();
+            var isClassExist = await _context.MainClasses.Where(s => s.StudentId == studentId).AnyAsync(c => c.ClassId == newAttendence.ClassId);
 
-            if (newAttendence.ClassId != classId)
+            if (isClassExist is false)
             {
                 throw new Exception("Not found class or student did not register to the class");
             }
