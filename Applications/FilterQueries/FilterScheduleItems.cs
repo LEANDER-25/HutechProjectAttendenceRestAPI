@@ -1,3 +1,5 @@
+using System;
+
 namespace RESTAPIRNSQLServer.Applications.FilterQueries
 {
     public class FilterScheduleItems

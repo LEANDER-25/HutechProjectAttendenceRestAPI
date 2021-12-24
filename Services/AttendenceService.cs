@@ -25,20 +25,9 @@ namespace RESTAPIRNSQLServer.Services
             _mapper = mapper;
             _scheduleService = scheduleService;
         }
-        public async Task<PaginationResultSet<AttendenceReadDTO>> GetAttendenceListBySchedule(FilterScheduleItems filter, PaginationOption option)
+        private IQueryable<CheckIn> GetAllRecordOfSchedule(FilterScheduleItems filter)
         {
-            var attendences = _context.CheckIns.AsQueryable();
-            int total = await attendences.Where(
-                a => (
-                    a.ClassId == filter.ClassId &&
-                    a.CourseId == filter.CourseId &&
-                    a.SubjectId == filter.SubjectId &&
-                    a.ScheduleId == filter.ScheduleId
-                )
-            ).CountAsync();
-
-            var list = await attendences
-            .OrderBy(s => s.ClassId)
+            var list = _context.CheckIns.AsQueryable().OrderBy(s => s.ClassId)
             .ThenBy(s => s.CourseId)
             .ThenBy(s => s.ScheduleId)
             .Where(
@@ -48,7 +37,15 @@ namespace RESTAPIRNSQLServer.Services
                     a.SubjectId == filter.SubjectId &&
                     a.ScheduleId == filter.ScheduleId
                 )
-            )
+            );
+            return list;
+        }
+        public async Task<PaginationResultSet<AttendenceReadDTO>> GetAttendenceListBySchedule(FilterScheduleItems filter, PaginationOption option)
+        {
+            // var attendences = _context.CheckIns.AsQueryable();
+            int total = await GetAllRecordOfSchedule(filter).CountAsync();
+
+            var list = await GetAllRecordOfSchedule(filter)
             .Include(a => a.Student)
             .Skip((option.Page.Value - 1) * option.Limit.Value)
             .Take(option.Limit.Value)
@@ -135,14 +132,15 @@ namespace RESTAPIRNSQLServer.Services
             //  Greater than but in range: 0-15 min => success
             //  Greater than but out of range: 0-15 min => fail
             var createAttendenceTime = DateTime.Now;
+            var fitler = new FilterScheduleItems()
+            {
+                ClassId = newAttendence.ClassId,
+                ScheduleId = newAttendence.ScheduleId,
+                SubjectId = newAttendence.SubjectId,
+                CourseId = newAttendence.CourseId
+            };
             var schedule = await _scheduleService.GetByID(
-                new FilterScheduleItems()
-                {
-                    ClassId = newAttendence.ClassId,
-                    ScheduleId = newAttendence.ScheduleId,
-                    SubjectId = newAttendence.SubjectId,
-                    CourseId = newAttendence.CourseId
-                }
+                fitler
             );
             var scheduleDate = schedule.StudyDate.Value.Date;
 
@@ -163,6 +161,25 @@ namespace RESTAPIRNSQLServer.Services
                     throw new Exception("Too late to checkin");
                 default:
                     break;
+            }
+
+            //Make sure that that in the same schedule there no device duplicate
+            var checkinlist = await GetAllRecordOfSchedule(fitler).Include(s => s.Student).Select(
+                c => new AttendenceReadDTO()
+                {
+                    StudentId = c.StudentId,
+                    StudentCode = c.Student.StudentCode,
+                    CreatedAt = c.CreatedAt,
+                    DeviceId = c.DeviceId
+                }
+            ).ToListAsync();            
+
+            foreach (var item in checkinlist)
+            {
+                if (newAttendence.DeviceId.Equals(item.DeviceId))
+                {
+                    throw new Exception($"Duplicate device, you are using same device with student {item.StudentCode}");
+                }
             }
 
             var checkin = _mapper.Map<CheckIn>(newAttendence);
