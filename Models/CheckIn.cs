@@ -32,6 +32,10 @@ namespace RESTAPIRNSQLServer.Models
         public string CurLocation { get; set; }
         [Column("created_at", TypeName = "datetime")]
         public DateTime CreatedAt { get; set; }
+        [Required]
+        [Column("device_id")]
+        [StringLength(255)]
+        public string DeviceId { get; set; }
 
         [ForeignKey("SubjectId,CourseId,ClassId,ScheduleId")]
         [InverseProperty("CheckIns")]

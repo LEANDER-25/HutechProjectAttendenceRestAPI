@@ -217,7 +217,6 @@ namespace RESTAPIRNSQLServer.Services
                 schedule.Shifts = MappingShifts(shifts);
             }
 
-
             return schedules;
         }
     }

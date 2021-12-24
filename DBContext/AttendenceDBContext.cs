@@ -40,7 +40,7 @@ namespace RESTAPIRNSQLServer.DBContext
             if (!optionsBuilder.IsConfigured)
             {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=AttendenceDB;Trusted_connection=yes");
+                optionsBuilder.UseSqlServer("Data Source=(local);Initial Catalog=AttendenceDB;Trusted_connection=yes;");
             }
         }
 
@@ -78,6 +78,8 @@ namespace RESTAPIRNSQLServer.DBContext
             {
                 entity.HasKey(e => new { e.StudentId, e.SubjectId, e.CourseId, e.ClassId, e.ScheduleId })
                     .HasName("_copy_9");
+
+                entity.Property(e => e.DeviceId).IsUnicode(false);
 
                 entity.HasOne(d => d.Student)
                     .WithMany(p => p.CheckIns)
