@@ -25,6 +25,9 @@ namespace RESTAPIRNSQLServer.Models
         [Column("description")]
         [StringLength(255)]
         public string Description { get; set; }
+        [Column("room_location")]
+        [StringLength(500)]
+        public string RoomLocation { get; set; }
 
         [InverseProperty(nameof(Schedule.Room))]
         public virtual ICollection<Schedule> Schedules { get; set; }
