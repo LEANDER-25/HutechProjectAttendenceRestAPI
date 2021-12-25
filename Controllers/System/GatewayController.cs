@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using RESTAPIRNSQLServer.Applications.System.FilterPipeLines;
 using RESTAPIRNSQLServer.DTOs.SystemDTOs;
 using RESTAPIRNSQLServer.IServices;
 
@@ -9,6 +10,7 @@ namespace RESTAPIRNSQLServer.Controllers.System
 {
     [Route("gateway")]
     [ApiController]
+    [ResourceFilter]
     public class GatewayController : ControllerBase
     {
         private readonly IGatewayService _service;

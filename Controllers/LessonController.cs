@@ -8,11 +8,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RESTAPIRNSQLServer.DTOs.LessonDTOs;
 
 namespace RESTAPIRNSQLServer.Controllers
 {
     [Route("api/lessons")]
     [ApiController]
+    //[ResourceFilter]
     public class LessonController : ControllerBase
     {
         private readonly ILessonService _service;
@@ -25,7 +27,17 @@ namespace RESTAPIRNSQLServer.Controllers
         public async Task<ActionResult> GetAllLesson()
         {
             var readDTO = await _service.GetAll();
-            return Ok(readDTO);
+
+            return Ok(
+                new LessonAll
+                {
+                    ListDTO = readDTO.ToList()
+                }
+            );
+        }
+        public class LessonAll
+        {
+            public IList<LessonReadDTO> ListDTO { get; set; }
         }
         [Authorize]
         [AuthorizeActionFilter(Role = "Student")]

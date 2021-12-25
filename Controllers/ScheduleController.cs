@@ -2,6 +2,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RESTAPIRNSQLServer.Applications.FilterQueries;
+using RESTAPIRNSQLServer.Applications.System.FilterPipeLines;
 using RESTAPIRNSQLServer.IServices;
 using RESTAPIRNSQLServer.Services;
 
@@ -9,6 +10,7 @@ namespace RESTAPIRNSQLServer.Controllers
 {
     [Route("api/schedules")]
     [ApiController]
+    [ResourceFilter]
     public class ScheduleController : ControllerBase
     {
         private readonly IScheduleService _service;

@@ -122,6 +122,9 @@ namespace RESTAPIRNSQLServer.Services
                 throw new Exception("Not found class or student did not register to the class");
             }
 
+            //Validate location of request vs location of room
+            // code
+
             //Validate create attendence time
             //Find schedule and make sure that schedule of request is avaible in the create time of request
             //If the create attendence time of new record is SMALLER than the start time of schedule 

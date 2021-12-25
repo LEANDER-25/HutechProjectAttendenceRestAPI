@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RESTAPIRNSQLServer.Applications.System;
+using RESTAPIRNSQLServer.Applications.System.FilterPipeLines;
 using RESTAPIRNSQLServer.DTOs.ImageDTOs;
 using RESTAPIRNSQLServer.IServices;
 
@@ -9,6 +10,7 @@ namespace RESTAPIRNSQLServer.Controllers
 {
     [Route("api/photos")]
     [ApiController]
+    [ResourceFilter]
     public class ImageController : ControllerBase
     {
         private const string ImageContentType = "image/png";

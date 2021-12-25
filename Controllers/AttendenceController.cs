@@ -1,7 +1,9 @@
 using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RESTAPIRNSQLServer.Applications.FilterQueries;
+using RESTAPIRNSQLServer.Applications.System.FilterPipeLines;
 using RESTAPIRNSQLServer.DTOs.CheckInDTOs;
 using RESTAPIRNSQLServer.IServices;
 
@@ -9,6 +11,7 @@ namespace RESTAPIRNSQLServer.Controllers
 {
     [Route("api/attendences")]
     [ApiController]
+    [ResourceFilter]
     public class AttendenceController : ControllerBase
     {
         private readonly IAttendenceService _service;
@@ -47,6 +50,8 @@ namespace RESTAPIRNSQLServer.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [Authorize]
+        [AuthorizeActionFilter(Role = "Student")]
         [HttpPost("checkin")]
         public async Task<ActionResult> CreateAttendenceReport([FromBody] AttendenceWriteDTO newAttendence)
         {
