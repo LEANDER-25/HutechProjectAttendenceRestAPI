@@ -1,4 +1,7 @@
+using System;
 using System.Text.RegularExpressions;
+using RESTAPIRNSQLServer.DTOs.CheckInDTOs;
+using RESTAPIRNSQLServer.Models;
 
 namespace RESTAPIRNSQLServer.Applications.Logic
 {
@@ -37,29 +40,65 @@ namespace RESTAPIRNSQLServer.Applications.Logic
             int dotCount = 0;
             foreach (var item in imageName)
             {
-                if(item.Equals('.'))
+                if (item.Equals('.'))
                 {
                     dotCount++;
-                }                
+                }
             }
-            if(dotCount != 5)
+            if (dotCount != 5)
             {
                 return false;
             }
             return true;
         }
         public static bool AreDigitsOnly(string text)
-    {
-        if (string.IsNullOrWhiteSpace(text))
-            return false;
- 
-        foreach (char character in text)
         {
-            if (character < '0' || character > '9')
+            if (string.IsNullOrWhiteSpace(text))
                 return false;
+
+            foreach (char character in text)
+            {
+                if (character < '0' || character > '9')
+                    return false;
+            }
+
+            return true;
         }
- 
-        return true;
-    }
+        public static bool ValidateLocation(AttendenceWriteDTO newAttendence, Room room)
+        {
+            if (newAttendence.Latitude != null && newAttendence.Longtitude != null)
+            {
+                if (GeocodingMath.IsYInRangeOfX(
+                    targetLatitude: newAttendence.Latitude,
+                    targetLongtitude: newAttendence.Longtitude,
+                    central: room.RoomLocation
+                ) is false)
+                {
+                    throw new Exception("Location is out of range of Study Room");
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                if (newAttendence.CurLocation == null)
+                {
+                    throw new Exception("Missing location of student");
+                }
+                else
+                {
+                    if (GeocodingMath.IsYInRangeOfX(target: newAttendence.CurLocation, central: room.RoomLocation) is false)
+                    {
+                        throw new Exception("Location is out of range of Study Room");
+                    }
+                    else
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
     }
 }

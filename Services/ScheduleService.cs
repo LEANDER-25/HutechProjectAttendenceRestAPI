@@ -88,6 +88,7 @@ namespace RESTAPIRNSQLServer.Services
             .Include(s => s.Assign)
             .ThenInclude(a => a.Course)
             .ThenInclude(c => c.Subject)
+            .Include(r => r.Room)
             .Select(
                 s => new ScheduleReadDTO
                 {
@@ -98,7 +99,8 @@ namespace RESTAPIRNSQLServer.Services
                     SubjectCode = s.Assign.Course.Subject.SubjectCode,
                     SubjectName = s.Assign.Course.Subject.SubjectName,
                     StudyDate = s.StudyDate,
-                    RoomId = s.RoomId
+                    RoomId = s.RoomId,
+                    RoomName = s.Room.RoomName
                 }
             )
             .FirstOrDefaultAsync();
@@ -176,6 +178,7 @@ namespace RESTAPIRNSQLServer.Services
                 .Include(s => s.Assign)
                 .ThenInclude(a => a.Course)
                 .ThenInclude(c => c.Subject)
+                .Include(r => r.Room)
                 .Select(
                     s => new ScheduleReadDTO
                     {
@@ -186,7 +189,8 @@ namespace RESTAPIRNSQLServer.Services
                         SubjectCode = s.Assign.Course.Subject.SubjectCode,
                         SubjectName = s.Assign.Course.Subject.SubjectName,
                         StudyDate = s.StudyDate,
-                        RoomId = s.RoomId
+                        RoomId = s.RoomId,
+                        RoomName = s.Room.RoomName
                     }
                 ).ToListAsync();
 

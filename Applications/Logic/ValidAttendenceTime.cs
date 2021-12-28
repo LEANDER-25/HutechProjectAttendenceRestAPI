@@ -10,7 +10,7 @@ namespace RESTAPIRNSQLServer.Applications.Logic
                 return false;
             return true;
         }
-        public static int IsCheckInAvaible(TimeSpan value, TimeSpan target, int acceptTimeInMinutes = 15)
+        public static int ValidateCheckInTime(TimeSpan value, TimeSpan target, int acceptTimeInMinutes = 15)
         {
             int soon = -1;
             int inTime = 0;
@@ -40,6 +40,20 @@ namespace RESTAPIRNSQLServer.Applications.Logic
                         return late;
                     }
                 }
+            }
+        }
+        public static bool IsCheckInAvaible(TimeSpan value, TimeSpan target)
+        {
+            var compare = ValidateCheckInTime(value, target);
+
+            switch (compare)
+            {
+                case -1:
+                    throw new Exception("Too soon to checkin");
+                case 1:
+                    throw new Exception("Too late to checkin");
+                default:
+                    return true;
             }
         }
     }

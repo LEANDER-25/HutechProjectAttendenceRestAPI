@@ -123,7 +123,7 @@ namespace RESTAPIRNSQLServer.Services
             }
 
             //Validate location of request vs location of room
-            // code
+            // var isInRange = GeocodingMath.IsYInRangeOfX("x", "y");
 
             //Validate create attendence time
             //Find schedule and make sure that schedule of request is avaible in the create time of request
@@ -132,7 +132,6 @@ namespace RESTAPIRNSQLServer.Services
             //If the create attendence time of new record is GREATER then the start time of schedule
             //  Greater than but in range: 0-15 min => success
             //  Greater than but out of range: 0-15 min => fail
-            var createAttendenceTime = DateTime.Now;
             var fitler = new FilterScheduleItems()
             {
                 ClassId = newAttendence.ClassId,
@@ -143,6 +142,11 @@ namespace RESTAPIRNSQLServer.Services
             var schedule = await _scheduleService.GetByID(
                 fitler
             );
+
+            var room = await _context.Rooms.Where(r => r.RoomId == schedule.RoomId).FirstOrDefaultAsync();
+            ValidationInput.ValidateLocation(newAttendence, room);
+
+            var createAttendenceTime = DateTime.Now;
             var scheduleDate = schedule.StudyDate.Value.Date;
 
             if (ValidAttendenceTime.IsScheduleAvailable(createAttendenceTime.Date, scheduleDate) is false)
@@ -151,18 +155,7 @@ namespace RESTAPIRNSQLServer.Services
             }
 
             var scheduleStartTime = schedule.Shifts[0].StartTime;
-
-            var compare = ValidAttendenceTime.IsCheckInAvaible(createAttendenceTime.TimeOfDay, scheduleStartTime);
-
-            switch (compare)
-            {
-                case -1:
-                    throw new Exception("Too soon to checkin");
-                case 1:
-                    throw new Exception("Too late to checkin");
-                default:
-                    break;
-            }
+            ValidAttendenceTime.IsCheckInAvaible(createAttendenceTime.TimeOfDay, scheduleStartTime);
 
             //Make sure that that in the same schedule there no device duplicate
             var checkinlist = await GetAllRecordOfSchedule(fitler).Include(s => s.Student).Select(
@@ -173,7 +166,7 @@ namespace RESTAPIRNSQLServer.Services
                     CreatedAt = c.CreatedAt,
                     DeviceId = c.DeviceId
                 }
-            ).ToListAsync();            
+            ).ToListAsync();
 
             foreach (var item in checkinlist)
             {

@@ -15,5 +15,6 @@ namespace RESTAPIRNSQLServer.DTOs.ScheduleDTOs
         public DateTime? StudyDate { get; set; }
         public int? RoomId { get; set; }
         public List<LessonReadDTO> Shifts { get; set;}
+        public string RoomName { get; set; }
     }
 }
