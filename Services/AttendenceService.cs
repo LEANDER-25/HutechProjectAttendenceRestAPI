@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -8,6 +9,7 @@ using RESTAPIRNSQLServer.Applications.Logic;
 using RESTAPIRNSQLServer.Applications.Paginations;
 using RESTAPIRNSQLServer.DBContext;
 using RESTAPIRNSQLServer.DTOs.CheckInDTOs;
+using RESTAPIRNSQLServer.Extensions;
 using RESTAPIRNSQLServer.IServices;
 using RESTAPIRNSQLServer.Models;
 
@@ -27,9 +29,9 @@ namespace RESTAPIRNSQLServer.Services
         }
         private IQueryable<CheckIn> GetAllRecordOfSchedule(FilterScheduleItems filter)
         {
-            var list = _context.CheckIns.AsQueryable().OrderBy(s => s.ClassId)
-            .ThenBy(s => s.CourseId)
-            .ThenBy(s => s.ScheduleId)
+            var list = _context.CheckIns.AsQueryable()
+            .OrderBy(s => s.ClassId)
+            .OrderByDescending(s => s.CreatedAt)
             .Where(
                 a => (
                     a.ClassId == filter.ClassId &&
@@ -83,6 +85,7 @@ namespace RESTAPIRNSQLServer.Services
                     a.CreatedAt == filter.CreatedAt.Value
                 )
             )
+            .Include(s => s.Student)
             .Select(
                 a => new AttendenceReadDTO()
                 {
@@ -182,6 +185,50 @@ namespace RESTAPIRNSQLServer.Services
 
             await _context.CheckIns.AddAsync(checkin);
             return await _context.SaveChangesAsync() >= 0;
+        }
+
+        public async Task<IEnumerable<AttendenceDetailDTO>> GetAttendencesOfSpecifyStudent(string code)
+        {
+            var studentId = await _context.Students.Where(s => s.StudentCode.Equals(code)).Select(s => s.StudentId).FirstOrDefaultAsync();
+            var attendenceList = await _context.CheckIns
+            .OrderBy(c => c.ClassId)
+            .OrderByDescending(c => c.CreatedAt)
+            .Where(
+                record => record.StudentId == studentId
+            ).ToListAsync();
+            var classrooms = await _context.Classrooms
+            .OrderBy(c => c.ClassId)
+            .Select( 
+                c =>  new Classroom 
+                { 
+                    ClassId = c.ClassId, 
+                    ClassName = c.ClassName 
+                }
+            ).ToListAsync();
+            var tempClasses = classrooms.Select(c => c.ClassId).ToList();
+            var subjects = await _context.Subjects
+            .OrderBy(s => s.SubjectId)
+            .ToListAsync();
+            var tempSubjects = subjects.Select(s => s.SubjectId).ToList();
+            var attendenceReport = new List<AttendenceDetailDTO>();
+            foreach (var item in attendenceList)
+            {
+                var classPos = Tool.BinarySearch<int>(tempClasses, item.ClassId);
+                var subjectPos = Tool.BinarySearch<int>(tempSubjects, item.SubjectId);
+                var temp = new AttendenceDetailDTO() 
+                {
+                    ClassId = item.ClassId,
+                    ClassName = classrooms[classPos].ClassName,
+                    SubjectId = item.SubjectId,
+                    SubjectName = subjects[subjectPos].SubjectName,
+                    CourseId = item.CourseId,
+                    ScheduleId = item.ScheduleId,
+                    StudentId = item.StudentId,
+                    CreatedAt = item.CreatedAt,
+                };
+                attendenceReport.Add(temp);
+            }
+            return attendenceReport;
         }
 
     }

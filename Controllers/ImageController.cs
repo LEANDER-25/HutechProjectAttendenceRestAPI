@@ -49,5 +49,33 @@ namespace RESTAPIRNSQLServer.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpPost("student")]
+        public async Task<ActionResult> SaveStudentImage([FromForm] ImageUploadDTO uploadDTO)
+        {
+            await Task.Delay(2000);
+            uploadDTO.EntityType = EntityEnum.Stundent;
+            try
+            {
+                string name = await _service.SaveStudentImage(uploadDTO);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        [HttpGet("student")]
+        public async Task<ActionResult> GetStudentImage([FromQuery]string imagename)
+        {
+            try
+            {
+                var photo = await _service.GetStudentImage(imagename);
+                return File(photo, ImageContentType);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
     }
 }

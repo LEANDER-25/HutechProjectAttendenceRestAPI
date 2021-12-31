@@ -85,6 +85,7 @@ namespace RESTAPIRNSQLServer
             services.AddScoped<IGatewayService, GatewayService>();
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IAttendenceService, AttendenceService>();
+            services.AddScoped<IClassService, ClassroomService>();
 
         }
 

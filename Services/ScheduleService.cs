@@ -11,6 +11,7 @@ using RESTAPIRNSQLServer.Models;
 using System.Collections.Generic;
 using RESTAPIRNSQLServer.DTOs.LessonDTOs;
 using System;
+using RESTAPIRNSQLServer.Extensions;
 
 namespace RESTAPIRNSQLServer.Services
 {
@@ -45,25 +46,9 @@ namespace RESTAPIRNSQLServer.Services
         {
             var total = await _context.Schedules.CountAsync();
             var scheduleList = await _context.Schedules.AsQueryable()
-            .OrderBy(s => s.ClassId)
-            .ThenBy(s => s.CourseId)
-            .ThenBy(s => s.ScheduleId)
-            .Include(s => s.Assign)
-            .ThenInclude(a => a.Course)
-            .ThenInclude(c => c.Subject)
-            .Select(
-                s => new ScheduleReadDTO
-                {
-                    ScheduleId = s.ScheduleId,
-                    CourseId = s.CourseId,
-                    ClassId = s.ClassId,
-                    SubjectId = s.SubjectId,
-                    SubjectCode = s.Assign.Course.Subject.SubjectCode,
-                    SubjectName = s.Assign.Course.Subject.SubjectName,
-                    StudyDate = s.StudyDate,
-                    RoomId = s.RoomId
-                }
-            )
+            .SchedulesOrdered()
+            .ScheduleIncludeBottomAssign()
+            .SelectScheduleHardCode()
             .Skip((pagination.Page.Value - 1) * pagination.Limit.Value)
             .Take(pagination.Limit.Value)
             .ToListAsync();
@@ -82,12 +67,10 @@ namespace RESTAPIRNSQLServer.Services
                     s.CourseId == filter.CourseId.Value
                 )
             )
-            .OrderBy(s => s.ClassId)
-            .ThenBy(s => s.CourseId)
-            .ThenBy(s => s.ScheduleId)
-            .Include(s => s.Assign)
-            .ThenInclude(a => a.Course)
-            .ThenInclude(c => c.Subject)
+            .SchedulesOrdered()
+            .ScheduleIncludeBottomAssign()
+            .ScheduleIncludeRightAssign()
+            .ScheduleIncludeLeftAssign()
             .Include(r => r.Room)
             .Select(
                 s => new ScheduleReadDTO
@@ -95,26 +78,35 @@ namespace RESTAPIRNSQLServer.Services
                     ScheduleId = s.ScheduleId,
                     CourseId = s.CourseId,
                     ClassId = s.ClassId,
+                    ClassName = s.Assign.Class.ClassName,
                     SubjectId = s.SubjectId,
                     SubjectCode = s.Assign.Course.Subject.SubjectCode,
                     SubjectName = s.Assign.Course.Subject.SubjectName,
                     StudyDate = s.StudyDate,
                     RoomId = s.RoomId,
-                    RoomName = s.Room.RoomName
+                    Shifts = s.Assign.StudyShifts.Select(
+                        item => new LessonReadDTO
+                        {
+                            LessonId = item.LessonId,
+                            LessonName = item.Lesson.LessonName,
+                            StartTime = item.Lesson.StartTime,
+                            EndTime = item.Lesson.EndTime
+                        }
+                    ).ToList()
                 }
             )
             .FirstOrDefaultAsync();
 
-            var shifts = await GetStudyShifts(
-                new FilterScheduleItems
-                {
-                    ClassId = specifySchedule.ClassId,
-                    CourseId = specifySchedule.CourseId,
-                    SubjectId = specifySchedule.SubjectId
-                }
-            );
+            // var shifts = await GetStudyShifts(
+            //     new FilterScheduleItems
+            //     {
+            //         ClassId = specifySchedule.ClassId,
+            //         CourseId = specifySchedule.CourseId,
+            //         SubjectId = specifySchedule.SubjectId
+            //     }
+            // );
 
-            specifySchedule.Shifts = MappingShifts(shifts);
+            // specifySchedule.Shifts = MappingShifts(shifts);
 
             return specifySchedule;
         }
@@ -132,7 +124,8 @@ namespace RESTAPIRNSQLServer.Services
 
         public async Task<IEnumerable<ScheduleReadDTO>> GetByStudent(string studentCode)
         {
-            //Get student ID
+            #region Get Student ID
+
             var studentID = await _context.Students
             .Where(s => s.StudentCode.Equals(studentCode))
             .Select(s => s.StudentId)
@@ -142,16 +135,20 @@ namespace RESTAPIRNSQLServer.Services
                 return null;
             }
 
-            //Get Class ID
+            #endregion
+
+            #region Get Classes of Student
             var joinedClasses = await _context.MainClasses
             .Where(m => m.StudentId == studentID)
-            .Select(c => c.ClassId)
+            .Include(c => c.Class)
+            .Select(c => new Classroom { ClassId = c.ClassId, ClassName = c.Class.ClassName })
             .ToListAsync();
 
             if (joinedClasses == null)
             {
                 return null;
             }
+            #endregion
 
             //Get Schedule in that week
             var dayOfWeek = ((int)DateTime.Now.DayOfWeek);
@@ -170,14 +167,12 @@ namespace RESTAPIRNSQLServer.Services
                 var temp = await query.AsQueryable()
                 .Where(
                     s => (
-                        s.ClassId == item &&
+                        s.ClassId == item.ClassId &&
                         s.StudyDate >= firstDateOfWeek &&
                         s.StudyDate <= lastDateOfWeek
                     )
                 )
-                .Include(s => s.Assign)
-                .ThenInclude(a => a.Course)
-                .ThenInclude(c => c.Subject)
+                .ScheduleIncludeBottomAssign()
                 .Include(r => r.Room)
                 .Select(
                     s => new ScheduleReadDTO
@@ -185,6 +180,7 @@ namespace RESTAPIRNSQLServer.Services
                         ScheduleId = s.ScheduleId,
                         CourseId = s.CourseId,
                         ClassId = s.ClassId,
+                        ClassName = item.ClassName,
                         SubjectId = s.SubjectId,
                         SubjectCode = s.Assign.Course.Subject.SubjectCode,
                         SubjectName = s.Assign.Course.Subject.SubjectName,
@@ -198,7 +194,6 @@ namespace RESTAPIRNSQLServer.Services
                 {
                     continue;
                 }
-
 
                 //Found and add into result
                 schedules.AddRange(temp);
