@@ -79,6 +79,11 @@ namespace RESTAPIRNSQLServer
                     ClockSkew = TimeSpan.Zero
                 };
             });
+            services.AddCors(option=>{
+                option.AddDefaultPolicy(builder=>{
+                   builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                });
+            });
             services.AddAuthorization();
 
             services.AddScoped<ILessonService, LessonService>();
@@ -86,6 +91,7 @@ namespace RESTAPIRNSQLServer
             services.AddScoped<IScheduleService, ScheduleService>();
             services.AddScoped<IAttendenceService, AttendenceService>();
             services.AddScoped<IClassService, ClassroomService>();
+            services.AddScoped<IAcademicYearService, AcademicYearService>();
 
         }
 
@@ -102,6 +108,8 @@ namespace RESTAPIRNSQLServer
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthentication();
             app.UseAuthorization();
