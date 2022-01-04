@@ -18,6 +18,7 @@ namespace RESTAPIRNSQLServer.Controllers
             _classroomService = classroomService;
             _academicService = academicService;
         }
+        //GET : api/information/classrooms/all
         [HttpGet("classrooms/all")]
         public async Task<ActionResult> GetAllClassrooms()
         {
