@@ -78,12 +78,16 @@ namespace RESTAPIRNSQLServer.Services
         public async Task<AttendenceReportDTO> GetAttendenceReportBySchedule(FilterScheduleItems filter, PaginationOption option)
         {
             var totalStudent = await _context.MainClasses.Where(
-                c => c.ClassId == filter.ClassId
+                c => c.ClassId == filter.ClassId.Value
             ).CountAsync();
             var attendencePagination = await GetAttendenceListBySchedule(filter, option);
             var report = new AttendenceReportDTO{
                 TotalStudent = totalStudent,
                 TotalAttendence = attendencePagination.Pagination.TotalRows,
+                ClassId = filter.ClassId.Value,
+                ScheduleId = filter.ScheduleId.Value,
+                SubjectId = filter.SubjectId.Value,
+                CourseId = filter.CourseId.Value,
                 AttendenceList = attendencePagination
             };
             return report;
