@@ -40,6 +40,19 @@ namespace RESTAPIRNSQLServer.Controllers
                 return BadRequest(e.Message);
             }
         }
+        [HttpGet("report")]
+        public async Task<ActionResult> GetAttendenceReportOfSchedule([FromQuery] FilterScheduleItems filter, [FromQuery] PaginationOption option)
+        {
+            try
+            {
+                var list = await _service.GetAttendenceReportBySchedule(filter, option);
+                return Ok(list);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
         [HttpGet("detail")]
         public async Task<ActionResult> GetDetailAttendenceReport([FromQuery] FilterAttendenceItems filter)
         {

@@ -9,6 +9,7 @@ namespace RESTAPIRNSQLServer.IServices
     public interface IAttendenceService
     {
         Task<PaginationResultSet<AttendenceReadDTO>> GetAttendenceListBySchedule(FilterScheduleItems filter, PaginationOption option);
+        Task<AttendenceReportDTO> GetAttendenceReportBySchedule(FilterScheduleItems filter, PaginationOption option);
         Task<AttendenceReadDTO> GetSingleRecordAttendence(FilterAttendenceItems filter);
         Task<bool> InsertNewRecord(AttendenceWriteDTO newAttendence);
         Task<IEnumerable<AttendenceDetailDTO>> GetAttendencesOfSpecifyStudent(string code);

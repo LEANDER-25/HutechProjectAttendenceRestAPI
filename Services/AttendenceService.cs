@@ -75,6 +75,19 @@ namespace RESTAPIRNSQLServer.Services
 
             return PaginationResultSet<AttendenceReadDTO>.PackingGoods(option.Page.Value, total, option.Limit.Value, list);
         }
+        public async Task<AttendenceReportDTO> GetAttendenceReportBySchedule(FilterScheduleItems filter, PaginationOption option)
+        {
+            var totalStudent = await _context.MainClasses.Where(
+                c => c.ClassId == filter.ClassId
+            ).CountAsync();
+            var attendencePagination = await GetAttendenceListBySchedule(filter, option);
+            var report = new AttendenceReportDTO{
+                TotalStudent = totalStudent,
+                TotalAttendence = attendencePagination.Pagination.TotalRows,
+                AttendenceList = attendencePagination
+            };
+            return report;
+        }
 
         public async Task<AttendenceReadDTO> GetSingleRecordAttendence(FilterAttendenceItems filter)
         {
@@ -229,7 +242,6 @@ namespace RESTAPIRNSQLServer.Services
                 attendenceReport.Add(temp);
             }
             return attendenceReport;
-        }
-
+        }        
     }
 }
