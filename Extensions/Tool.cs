@@ -78,6 +78,20 @@ namespace RESTAPIRNSQLServer.Extensions
             // present in array
             return -1;
         }
+        public static DateTime GetFirstDayOfThisWeek()
+        {
+            var dayOfWeek = ((int)DateTime.Now.DayOfWeek);
+            ////Monday
+            var firstDateOfWeek = DateTime.Now.AddDays(0 - (dayOfWeek - 1));
+            return firstDateOfWeek;
+        }
+        public static DateTime GetLastDayOfThisWeek()
+        {
+            var dayOfWeek = ((int)DateTime.Now.DayOfWeek);
+            ////Sunday
+            var lastDateOfWeek = DateTime.Now.AddDays(6 - dayOfWeek + 1);
+            return lastDateOfWeek;
+        }
         public static IQueryable<Schedule> SchedulesOrdered(this IQueryable<Schedule> schedules)
         {
             return schedules.OrderBy(s => s.ClassId).ThenBy(s => s.CourseId).ThenBy(s => s.ScheduleId);
@@ -103,5 +117,6 @@ namespace RESTAPIRNSQLServer.Extensions
         {
             return schedules.Include(s => s.Assign).ThenInclude(a => a.Class);
         }
+
     }
 }

@@ -12,6 +12,7 @@ namespace RESTAPIRNSQLServer.IServices
         Task<PaginationResultSet<ScheduleReadDTO>> GetAll(PaginationOption pagination);
         //GET each schedule
         Task<ScheduleReadDTO> GetByID(FilterScheduleItems filter);
-        Task<IEnumerable<ScheduleReadDTO>> GetByStudent(string studentCode);
+        Task<WeeklySchedulesDTO> GetByStudent(string studentCode);
+        Task<WeeklySchedulesDTO> GetByTeacher(string teacherCode);
     }
 }

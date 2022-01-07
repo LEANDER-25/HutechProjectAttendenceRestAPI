@@ -122,7 +122,7 @@ namespace RESTAPIRNSQLServer.Services
             return shifts;
         }
 
-        public async Task<IEnumerable<ScheduleReadDTO>> GetByStudent(string studentCode)
+        public async Task<WeeklySchedulesDTO> GetByStudent(string studentCode)
         {
             #region Get Student ID
 
@@ -151,11 +151,10 @@ namespace RESTAPIRNSQLServer.Services
             #endregion
 
             //Get Schedule in that week
-            var dayOfWeek = ((int)DateTime.Now.DayOfWeek);
             ////Monday
-            var firstDateOfWeek = DateTime.Now.AddDays(0 - (dayOfWeek - 1));
+            var firstDateOfWeek = Tool.GetFirstDayOfThisWeek();
             ////Sunday
-            var lastDateOfWeek = DateTime.Now.AddDays(6 - dayOfWeek + 1);
+            var lastDateOfWeek = Tool.GetLastDayOfThisWeek();
 
             //Create the query and result
             var query = _context.Schedules.AsQueryable();
@@ -216,7 +215,93 @@ namespace RESTAPIRNSQLServer.Services
                 schedule.Shifts = MappingShifts(shifts);
             }
 
-            return schedules;
+            var weeklySchedulesDTO = new WeeklySchedulesDTO()
+            {
+                From = firstDateOfWeek.ToString(),
+                To = lastDateOfWeek.ToString(),
+                Schedules = schedules
+                
+            };
+
+            return weeklySchedulesDTO;
+        }
+
+        public async Task<WeeklySchedulesDTO> GetByTeacher(string teacherCode)
+        {
+            //Fine teacher
+            var teacher = await _context.Teachers.Where(t => t.TeacherCode.Equals(teacherCode)).FirstOrDefaultAsync();
+
+            //Find course of teacher
+            var courses = await _context.Courses.Where(c => c.TeacherId == teacher.TeacherId).ToListAsync();
+
+            //Find schedule in week of course
+            var firstDateOfWeek = Tool.GetFirstDayOfThisWeek();
+            var lastDateOfWeek = Tool.GetLastDayOfThisWeek();
+
+            var schedules = new List<ScheduleReadDTO>();
+            var query = _context.Schedules.AsQueryable();
+
+            foreach (var item in courses)
+            {
+                var temp = await query
+                .Where(
+                    s => (
+                        s.CourseId == item.CourseId &&
+                        s.SubjectId == item.SubjectId &&
+                        s.StudyDate >= firstDateOfWeek &&
+                        s.StudyDate <= lastDateOfWeek
+                    )
+                )
+                .ScheduleIncludeBottomAssign()
+                .ScheduleIncludeRightAssign()
+                .Include(r => r.Room)
+                .Select(
+                    s => new ScheduleReadDTO
+                    {
+                        ScheduleId = s.ScheduleId,
+                        CourseId = s.CourseId,
+                        ClassId = s.ClassId,
+                        ClassName = s.Assign.Class.ClassName,
+                        SubjectId = s.SubjectId,
+                        SubjectCode = s.Assign.Course.Subject.SubjectCode,
+                        SubjectName = s.Assign.Course.Subject.SubjectName,
+                        StudyDate = s.StudyDate,
+                        RoomId = s.RoomId,
+                        RoomName = s.Room.RoomName
+                    }
+                ).ToListAsync();
+
+                if (temp == null)
+                {
+                    continue;
+                }
+
+                //Found and add into result
+                schedules.AddRange(temp);
+            }
+
+            //sort the studyDate of the result
+            schedules = schedules.OrderBy(s => s.StudyDate).ToList();
+
+            //Find the shifts of schedule
+            foreach (var schedule in schedules)
+            {
+                var shifts = await GetStudyShifts(
+                    new FilterScheduleItems
+                    {
+                        ClassId = schedule.ClassId,
+                        CourseId = schedule.CourseId,
+                        SubjectId = schedule.SubjectId
+                    }
+                );
+                schedule.Shifts = MappingShifts(shifts);
+            }
+
+            return new WeeklySchedulesDTO{
+                From = firstDateOfWeek.ToString(),
+                To = lastDateOfWeek.ToString(),
+                Schedules = schedules,
+            };
         }
     }
 }

@@ -39,7 +39,17 @@ namespace RESTAPIRNSQLServer.Controllers
         public async Task<ActionResult> GetByStudent([FromQuery] string studentCode)
         {
             var detail = await _service.GetByStudent(studentCode);
-            if(detail == null || detail.Count() == 0)
+            if(detail.Schedules == null || detail.Schedules.Count() == 0)
+            {
+                return NotFound();
+            }
+            return Ok(detail);
+        }
+        [HttpGet("detail/teacher")]
+        public async Task<ActionResult> GetByTeacher([FromQuery] string teacherCode)
+        {
+            var detail = await _service.GetByTeacher(teacherCode);
+            if(detail.Schedules == null || detail.Schedules.Count() == 0)
             {
                 return NotFound();
             }
