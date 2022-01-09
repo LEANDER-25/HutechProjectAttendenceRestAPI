@@ -66,11 +66,12 @@ namespace RESTAPIRNSQLServer.Services
                 throw new System.Exception("Wrong Type of Entity");
             }
             uploadDTO.BusinessCode = uploadDTO.BusinessCode.Trim();
+            var splits = uploadDTO.BusinessCode.Split("-");
             var attendenceReadDTO = await _attendenceService.GetSingleRecordAttendence(
                 new FilterAttendenceItems()
                 {
-                    StudentCode = uploadDTO.BusinessCode,
-                    CreatedAt = uploadDTO.CreatedAt
+                    StudentCode = splits[0],
+                    ScheduleId = Int32.Parse(splits[1])
                 }
             );
             if (attendenceReadDTO == null)
@@ -113,10 +114,10 @@ namespace RESTAPIRNSQLServer.Services
         }
         public async Task<byte[]> GetAttendenceImage(string imageName)
         {
-            if (ValidationInput.IsImageNameValid(imageName) is false)
-            {
-                throw new Exception("Invalid image's name");
-            }
+            // if (ValidationInput.IsImageNameValid(imageName) is false)
+            // {
+            //     throw new Exception("Invalid image's name");
+            // }
 
             var spiltImageName = imageName.Split(".");
 

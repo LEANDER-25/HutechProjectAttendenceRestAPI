@@ -22,10 +22,11 @@ namespace RESTAPIRNSQLServer.Controllers
             _service = service;
         }
         [HttpPost("checkin")]
-        public async Task<ActionResult> SaveAttendenceImage([FromForm] ImageUploadDTO uploadDTO)
+        public async Task<ActionResult> SaveAttendenceImage([FromQuery] int schedule, [FromForm] ImageUploadDTO uploadDTO)
         {
             await Task.Delay(2000);
             uploadDTO.EntityType = EntityEnum.Attendence;
+            uploadDTO.BusinessCode = uploadDTO.BusinessCode + "-" + schedule.ToString();
             try
             {
                 string name = await _service.SaveAttendenceImage(uploadDTO);

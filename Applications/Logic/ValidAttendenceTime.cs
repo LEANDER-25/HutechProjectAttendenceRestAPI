@@ -25,7 +25,7 @@ namespace RESTAPIRNSQLServer.Applications.Logic
             }
             else if (hourValue > hourTarget)
             {
-                minuteValue += 60;
+                minuteValue += (60 * (hourValue - hourTarget));
                 if(minuteValue - minuteTarget <= acceptTimeInMinutes)
                 {
                     return inTime;

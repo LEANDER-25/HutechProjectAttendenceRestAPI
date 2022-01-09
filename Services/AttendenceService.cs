@@ -96,11 +96,18 @@ namespace RESTAPIRNSQLServer.Services
 
         public async Task<AttendenceReadDTO> GetSingleRecordAttendence(FilterAttendenceItems filter)
         {
+            var studentId = await _context.Students
+            .Where(
+                s => s.StudentCode.Equals(filter.StudentCode)
+            )
+            .Select(s => s.StudentId)
+            .FirstOrDefaultAsync();
+
             var attendences = _context.CheckIns.AsQueryable();
             var single = await attendences.Where(
                 a => (
-                    a.StudentId == filter.StundentId.Value &&
-                    a.CreatedAt == filter.CreatedAt.Value
+                    a.StudentId == studentId &&
+                    a.ScheduleId == filter.ScheduleId.Value
                 )
             )
             .Include(s => s.Student)
