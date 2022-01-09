@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -29,7 +30,7 @@ namespace RESTAPIRNSQLServer.Controllers
         public async Task<ActionResult> GetDetail([FromQuery] FilterScheduleItems filter)
         {
             var detail = await _service.GetByID(filter);
-            if(detail == null)
+            if (detail == null)
             {
                 return NotFound();
             }
@@ -38,22 +39,36 @@ namespace RESTAPIRNSQLServer.Controllers
         [HttpGet("detail/student")]
         public async Task<ActionResult> GetByStudent([FromQuery] string studentCode)
         {
-            var detail = await _service.GetByStudent(studentCode);
-            if(detail.Schedules == null || detail.Schedules.Count() == 0)
+            try
             {
-                return NotFound();
+                var detail = await _service.GetByStudent(studentCode);
+                if (detail.Schedules == null || detail.Schedules.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(detail);
             }
-            return Ok(detail);
+            catch (Exception)
+            {
+                return BadRequest("Error is occurred while getting data. Check your student code");
+            }
         }
         [HttpGet("detail/teacher")]
         public async Task<ActionResult> GetByTeacher([FromQuery] string teacherCode)
         {
-            var detail = await _service.GetByTeacher(teacherCode);
-            if(detail.Schedules == null || detail.Schedules.Count() == 0)
+            try
             {
-                return NotFound();
+                var detail = await _service.GetByTeacher(teacherCode);
+                if (detail.Schedules == null || detail.Schedules.Count() == 0)
+                {
+                    return NotFound();
+                }
+                return Ok(detail);
             }
-            return Ok(detail);
+            catch (Exception)
+            {
+                return BadRequest("Error is occurred while getting data. Check your teacher code");
+            }
         }
     }
 }
