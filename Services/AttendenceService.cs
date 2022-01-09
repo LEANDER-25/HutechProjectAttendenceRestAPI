@@ -195,7 +195,8 @@ namespace RESTAPIRNSQLServer.Services
                     DeviceId = c.DeviceId
                 }
             ).ToListAsync();
-
+            
+            //To check the duplicate device -> ignore below comment
             // ValidAttendenceDevice.IsDuplicateDevice(checkinlist, newAttendence);
 
             var checkin = _mapper.Map<CheckIn>(newAttendence);
