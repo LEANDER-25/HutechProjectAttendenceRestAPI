@@ -92,6 +92,7 @@ namespace RESTAPIRNSQLServer
             services.AddScoped<IAttendenceService, AttendenceService>();
             services.AddScoped<IClassService, ClassroomService>();
             services.AddScoped<IAcademicYearService, AcademicYearService>();
+            services.AddScoped<IImageService, ImageService>();
 
         }
 

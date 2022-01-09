@@ -78,9 +78,21 @@ namespace RESTAPIRNSQLServer.Extensions
             // present in array
             return -1;
         }
+        private static int isTodaySunday(int dayOfWeek)
+        {
+            if (dayOfWeek == 0)
+            {
+                return 7;
+            }
+            else
+            {
+                return dayOfWeek;
+            }
+        }
         public static DateTime GetFirstDayOfThisWeek()
         {
             var dayOfWeek = ((int)DateTime.Now.DayOfWeek);
+            dayOfWeek = isTodaySunday(dayOfWeek);
             ////Monday
             var firstDateOfWeek = DateTime.Now.AddDays(0 - (dayOfWeek - 1));
             return firstDateOfWeek;
@@ -88,6 +100,7 @@ namespace RESTAPIRNSQLServer.Extensions
         public static DateTime GetLastDayOfThisWeek()
         {
             var dayOfWeek = ((int)DateTime.Now.DayOfWeek);
+            dayOfWeek = isTodaySunday(dayOfWeek);
             ////Sunday
             var lastDateOfWeek = DateTime.Now.AddDays(6 - dayOfWeek + 1);
             return lastDateOfWeek;

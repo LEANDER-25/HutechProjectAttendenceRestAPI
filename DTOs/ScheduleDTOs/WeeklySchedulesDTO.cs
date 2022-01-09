@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace RESTAPIRNSQLServer.DTOs.ScheduleDTOs
@@ -6,6 +7,12 @@ namespace RESTAPIRNSQLServer.DTOs.ScheduleDTOs
     {
         public string From { get; set; }
         public string To { get; set; }
-        public IEnumerable<ScheduleReadDTO> Schedules { get; set; }
+        public IEnumerable<PerDay> Schedules { get; set; }
+
+        public class PerDay
+        {
+            public DateTime StudyDate { get; set; }
+            public List<ScheduleReadDTO> Details { get; set; }
+        }
     }
 }

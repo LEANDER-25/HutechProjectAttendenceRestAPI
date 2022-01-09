@@ -122,6 +122,48 @@ namespace RESTAPIRNSQLServer.Services
             return shifts;
         }
 
+        private List<WeeklySchedulesDTO.PerDay> GetPerDays(DateTime firstDateOfWeek, DateTime lastDateOfWeek, IEnumerable<ScheduleReadDTO> schedules)
+        {
+            var scheduleByDay = new List<WeeklySchedulesDTO.PerDay>();
+            var tempDate = firstDateOfWeek;
+            while (tempDate <= lastDateOfWeek)
+            {
+                var temp = new WeeklySchedulesDTO.PerDay()
+                {
+                    StudyDate = tempDate,
+                    Details = new List<ScheduleReadDTO>()
+                };
+                tempDate = tempDate.AddDays(1);
+                scheduleByDay.Add(temp);                 
+            }
+
+            foreach (var item in scheduleByDay)
+            {
+                var temp = new List<ScheduleReadDTO>();
+                foreach (var schedule in schedules)
+                {
+                    if (schedule.StudyDate.Value.Date == item.StudyDate.Date)
+                    {
+                        temp.Add(schedule);
+                    }
+                }
+                if (temp.Count() != 0)
+                {
+                    item.Details.AddRange(temp);
+                }
+            }
+            var tempList = new List<WeeklySchedulesDTO.PerDay>();
+            tempList.AddRange(scheduleByDay);
+            foreach (var item in tempList)
+            {
+                if(item.Details.Count() == 0)
+                {
+                    scheduleByDay.Remove(item);
+                }
+            }
+            return scheduleByDay;
+        }
+
         public async Task<WeeklySchedulesDTO> GetByStudent(string studentCode)
         {
             #region Get Student ID
@@ -215,15 +257,14 @@ namespace RESTAPIRNSQLServer.Services
                 schedule.Shifts = MappingShifts(shifts);
             }
 
-            var weeklySchedulesDTO = new WeeklySchedulesDTO()
+            var scheduleByDay = GetPerDays(firstDateOfWeek, lastDateOfWeek, schedules);
+
+            return new WeeklySchedulesDTO
             {
                 From = firstDateOfWeek.ToString(),
                 To = lastDateOfWeek.ToString(),
-                Schedules = schedules
-                
+                Schedules = scheduleByDay,
             };
-
-            return weeklySchedulesDTO;
         }
 
         public async Task<WeeklySchedulesDTO> GetByTeacher(string teacherCode)
@@ -297,10 +338,13 @@ namespace RESTAPIRNSQLServer.Services
                 schedule.Shifts = MappingShifts(shifts);
             }
 
-            return new WeeklySchedulesDTO{
+            var scheduleByDay = GetPerDays(firstDateOfWeek, lastDateOfWeek, schedules);
+
+            return new WeeklySchedulesDTO
+            {
                 From = firstDateOfWeek.ToString(),
                 To = lastDateOfWeek.ToString(),
-                Schedules = schedules,
+                Schedules = scheduleByDay,
             };
         }
     }
