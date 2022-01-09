@@ -210,7 +210,7 @@ namespace RESTAPIRNSQLServer.Services
             }
             checkin.StudentId = studentId;
 
-            checkin.LogOut();
+            // checkin.LogOut();
 
             await _context.CheckIns.AddAsync(checkin);
             return await _context.SaveChangesAsync() >= 0;
