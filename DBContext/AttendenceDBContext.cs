@@ -89,7 +89,7 @@ namespace RESTAPIRNSQLServer.DBContext
 
                 entity.HasOne(d => d.Schedule)
                     .WithMany(p => p.CheckIns)
-                    .HasForeignKey(d => new { d.SubjectId, d.CourseId, d.ClassId, d.ScheduleId })
+                    .HasForeignKey(d => new { d.ClassId, d.CourseId, d.SubjectId, d.ScheduleId })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_check_schedule");
             });

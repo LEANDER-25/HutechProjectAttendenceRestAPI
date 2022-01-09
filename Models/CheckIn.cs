@@ -37,7 +37,7 @@ namespace RESTAPIRNSQLServer.Models
         [StringLength(255)]
         public string DeviceId { get; set; }
 
-        [ForeignKey("SubjectId,CourseId,ClassId,ScheduleId")]
+        [ForeignKey("ClassId,CourseId,SubjectId,ScheduleId")]
         [InverseProperty("CheckIns")]
         public virtual Schedule Schedule { get; set; }
         [ForeignKey(nameof(StudentId))]

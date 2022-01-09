@@ -10,7 +10,7 @@ namespace RESTAPIRNSQLServer.Applications.Logic
                 return false;
             return true;
         }
-        public static int ValidateCheckInTime(TimeSpan value, TimeSpan target, int acceptTimeInMinutes = 15)
+        public static int ValidateCheckInTime(TimeSpan value, TimeSpan target, int acceptTimeInMinutes = 45)
         {
             int soon = -1;
             int inTime = 0;
@@ -20,9 +20,18 @@ namespace RESTAPIRNSQLServer.Applications.Logic
             int minuteValue = value.Minutes;
             int minuteTarget = target.Minutes;
             if (hourValue < hourTarget)
+            {
                 return soon;
+            }
             else if (hourValue > hourTarget)
+            {
+                minuteValue += 60;
+                if(minuteValue - minuteTarget <= acceptTimeInMinutes)
+                {
+                    return inTime;
+                }
                 return late;
+            }
             else
             {
                 if (minuteValue < minuteTarget)

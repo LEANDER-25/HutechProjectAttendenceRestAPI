@@ -81,7 +81,8 @@ namespace RESTAPIRNSQLServer.Services
                 c => c.ClassId == filter.ClassId.Value
             ).CountAsync();
             var attendencePagination = await GetAttendenceListBySchedule(filter, option);
-            var report = new AttendenceReportDTO{
+            var report = new AttendenceReportDTO
+            {
                 TotalStudent = totalStudent,
                 TotalAttendence = attendencePagination.Pagination.TotalRows,
                 ClassId = filter.ClassId.Value,
@@ -190,15 +191,26 @@ namespace RESTAPIRNSQLServer.Services
 
             foreach (var item in checkinlist)
             {
-                if (newAttendence.DeviceId.Equals(item.DeviceId))
+                if ((item.DeviceId != null || !item.DeviceId.Equals("")) && newAttendence.DeviceId.Equals(item.DeviceId))
                 {
                     throw new Exception($"Duplicate device, you are using same device with student {item.StudentCode}");
                 }
             }
 
             var checkin = _mapper.Map<CheckIn>(newAttendence);
-            checkin.CreatedAt = createAttendenceTime;
-            checkin.SubjectId = studentId;
+            var formatTime = createAttendenceTime.ToString().Split(".");
+            checkin.CreatedAt = DateTime.Parse(formatTime[0]);
+            if (newAttendence.CurLocation != null)
+            {
+                checkin.CurLocation = newAttendence.CurLocation;
+            }
+            else
+            {
+                checkin.CurLocation = newAttendence.Latitude + " " + newAttendence.Longtitude;
+            }
+            checkin.StudentId = studentId;
+
+            checkin.LogOut();
 
             await _context.CheckIns.AddAsync(checkin);
             return await _context.SaveChangesAsync() >= 0;
@@ -215,11 +227,11 @@ namespace RESTAPIRNSQLServer.Services
             ).ToListAsync();
             var classrooms = await _context.Classrooms
             .OrderBy(c => c.ClassId)
-            .Select( 
-                c =>  new Classroom 
-                { 
-                    ClassId = c.ClassId, 
-                    ClassName = c.ClassName 
+            .Select(
+                c => new Classroom
+                {
+                    ClassId = c.ClassId,
+                    ClassName = c.ClassName
                 }
             ).ToListAsync();
             var tempClasses = classrooms.Select(c => c.ClassId).ToList();
@@ -232,7 +244,7 @@ namespace RESTAPIRNSQLServer.Services
             {
                 var classPos = Tool.BinarySearch<int>(tempClasses, item.ClassId);
                 var subjectPos = Tool.BinarySearch<int>(tempSubjects, item.SubjectId);
-                var temp = new AttendenceDetailDTO() 
+                var temp = new AttendenceDetailDTO()
                 {
                     ClassId = item.ClassId,
                     ClassName = classrooms[classPos].ClassName,
@@ -246,6 +258,6 @@ namespace RESTAPIRNSQLServer.Services
                 attendenceReport.Add(temp);
             }
             return attendenceReport;
-        }        
+        }
     }
 }

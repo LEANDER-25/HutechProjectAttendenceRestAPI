@@ -87,14 +87,14 @@ namespace RESTAPIRNSQLServer.Services.SystemServices
             var existedUser = await _context.Teachers.Where(s => s.Email.Equals(user.Email)).Select(s => new
             {
                 Email = s.Email,
-                Password = s.Password.MD5Hash(),
+                Password = s.Password,
                 FirstName = s.TeacherFirstName,
                 LastName = s.TeacherLastName,
                 Code = s.TeacherCode
             }).FirstOrDefaultAsync();
             if (existedUser == null)
                 throw new System.Exception("Email or Password is Invalid");
-            if (existedUser.Password.Equals(user.Password))
+            if (existedUser.Password.Equals(user.Password.MD5Hash()))
             {
 
                 var userWithToken = new UserWithToken()
