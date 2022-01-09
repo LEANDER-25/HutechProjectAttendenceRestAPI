@@ -185,7 +185,7 @@ namespace RESTAPIRNSQLServer.Services
             var scheduleStartTime = schedule.Shifts[0].StartTime;
             ValidAttendenceTime.IsCheckInAvaible(createAttendenceTime.TimeOfDay, scheduleStartTime);
 
-            //Make sure that that in the same schedule there no device duplicate
+            // Make sure that that in the same schedule there no device duplicate
             var checkinlist = await GetAllRecordOfSchedule(fitler).Include(s => s.Student).Select(
                 c => new AttendenceReadDTO()
                 {
@@ -196,13 +196,7 @@ namespace RESTAPIRNSQLServer.Services
                 }
             ).ToListAsync();
 
-            foreach (var item in checkinlist)
-            {
-                if ((item.DeviceId != null || !item.DeviceId.Equals("")) && newAttendence.DeviceId.Equals(item.DeviceId))
-                {
-                    throw new Exception($"Duplicate device, you are using same device with student {item.StudentCode}");
-                }
-            }
+            // ValidAttendenceDevice.IsDuplicateDevice(checkinlist, newAttendence);
 
             var checkin = _mapper.Map<CheckIn>(newAttendence);
             var formatTime = createAttendenceTime.ToString().Split(".");
