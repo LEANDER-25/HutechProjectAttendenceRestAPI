@@ -197,7 +197,7 @@ namespace RESTAPIRNSQLServer.Services
             ).ToListAsync();
             
             //To check the duplicate device -> ignore below comment
-            // ValidAttendenceDevice.IsDuplicateDevice(checkinlist, newAttendence);
+            ValidAttendenceDevice.IsDuplicateDevice(checkinlist, newAttendence);
 
             var checkin = _mapper.Map<CheckIn>(newAttendence);
             var formatTime = createAttendenceTime.ToString().Split(".");
@@ -214,8 +214,9 @@ namespace RESTAPIRNSQLServer.Services
 
             // checkin.LogOut();
 
-            await _context.CheckIns.AddAsync(checkin);
-            return await _context.SaveChangesAsync() >= 0;
+            // await _context.CheckIns.AddAsync(checkin);
+            // return await _context.SaveChangesAsync() >= 0;
+            return true;
         }
 
         public async Task<IEnumerable<AttendenceDetailDTO>> GetAttendencesOfSpecifyStudent(string code)

@@ -24,7 +24,7 @@ namespace RESTAPIRNSQLServer.Controllers
         {
             return $"https://" +
                 $"{Request.Host}" +
-                "/api/photos/attendence/" +
+                "/api/photos/attendence/?imagename=" +
                 $"{SubjectId}.{CourseId}.{ClassId}.{ScheduleId}.{StudentId}";
         }
         [HttpGet("list")]
