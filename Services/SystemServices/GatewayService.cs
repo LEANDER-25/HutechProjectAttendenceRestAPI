@@ -94,6 +94,9 @@ namespace RESTAPIRNSQLServer.Services.SystemServices
             }).FirstOrDefaultAsync();
             if (existedUser == null)
                 throw new System.Exception("Email or Password is Invalid");
+            user.Password.LogOut();
+            user.Password.MD5Hash().LogOut();
+            existedUser.Password.LogOut();
             if (existedUser.Password.Equals(user.Password.MD5Hash()))
             {
 

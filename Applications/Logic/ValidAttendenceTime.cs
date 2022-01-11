@@ -10,7 +10,7 @@ namespace RESTAPIRNSQLServer.Applications.Logic
                 return false;
             return true;
         }
-        public static int ValidateCheckInTime(TimeSpan value, TimeSpan target, int acceptTimeInMinutes = 45)
+        public static int ValidateCheckInTime(TimeSpan value, TimeSpan target, int acceptTimeInMinutes = 15)
         {
             int soon = -1;
             int inTime = 0;

@@ -214,9 +214,9 @@ namespace RESTAPIRNSQLServer.Services
 
             // checkin.LogOut();
 
-            // await _context.CheckIns.AddAsync(checkin);
-            // return await _context.SaveChangesAsync() >= 0;
-            return true;
+            await _context.CheckIns.AddAsync(checkin);
+            return await _context.SaveChangesAsync() >= 0;
+            // return true;
         }
 
         public async Task<IEnumerable<AttendenceDetailDTO>> GetAttendencesOfSpecifyStudent(string code)

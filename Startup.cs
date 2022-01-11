@@ -80,8 +80,10 @@ namespace RESTAPIRNSQLServer
                 };
             });
             services.AddCors(option=>{
-                option.AddDefaultPolicy(builder=>{
-                   builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+                option.AddPolicy("AllowAll", builder=>{
+                   builder.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod();
                 });
             });
             services.AddAuthorization();
@@ -94,6 +96,8 @@ namespace RESTAPIRNSQLServer
             services.AddScoped<IAcademicYearService, AcademicYearService>();
             services.AddScoped<IImageService, ImageService>();
 
+            services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -105,12 +109,16 @@ namespace RESTAPIRNSQLServer
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RESTAPIRNSQLServer v1"));
             }
+            //else
+            //{
+            //    app.UseHttpsRedirection();
+            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
 
-            app.UseCors();
+            app.UseCors("AllowAll");
 
             app.UseAuthentication();
             app.UseAuthorization();
@@ -119,6 +127,7 @@ namespace RESTAPIRNSQLServer
             {
                 endpoints.MapControllers();
             });
+            //app.UseMvc();
         }
     }
 }

@@ -2,12 +2,14 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using RESTAPIRNSQLServer.Applications.FilterQueries;
+using RESTAPIRNSQLServer.Applications.System.FilterPipeLines;
 using RESTAPIRNSQLServer.IServices;
 
 namespace RESTAPIRNSQLServer.Controllers
 {
     [Route("api/information")]
     [ApiController]
+    [ResourceFilter]
     public class InfomationController : ControllerBase
     {
         private readonly IClassService _classroomService;
@@ -32,6 +34,7 @@ namespace RESTAPIRNSQLServer.Controllers
                 return StatusCode(500, "Error is occured while getting classrooms data!");
             }
         }
+        
         [HttpGet("classrooms/student")]
         public async Task<ActionResult> GetClassroomsByStudent([FromQuery] FilterClassroomItems filter)
         {
