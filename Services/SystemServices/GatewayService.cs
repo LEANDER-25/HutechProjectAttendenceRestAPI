@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using RESTAPIRNSQLServer.DBContext;
 using RESTAPIRNSQLServer.DTOs.SystemDTOs;
 using RESTAPIRNSQLServer.Applications.System;
+using RESTAPIRNSQLServer.Applications.System.Enums;
 using RESTAPIRNSQLServer.IServices;
 using System.Security.Claims;
 using System;

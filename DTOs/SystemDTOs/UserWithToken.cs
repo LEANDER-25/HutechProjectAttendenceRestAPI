@@ -1,6 +1,7 @@
 using RESTAPIRNSQLServer.DTOs.PersonDTOs;
 using RESTAPIRNSQLServer.Services.SystemServices;
 using RESTAPIRNSQLServer.Applications.System;
+using RESTAPIRNSQLServer.Applications.System.Enums;
 
 namespace RESTAPIRNSQLServer.DTOs.SystemDTOs
 {

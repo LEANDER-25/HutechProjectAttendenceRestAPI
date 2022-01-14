@@ -89,6 +89,7 @@ namespace RESTAPIRNSQLServer.Controllers
         }
         [Authorize]
         [AuthorizeActionFilter(Role = "Student")]
+        [PrivateAccessFilter(AccessForm = Applications.System.Enums.AccessForm.StudentCode)]
         [HttpGet("ptivate")]
         public async Task<ActionResult> GetAttendencesForPrivate([FromQuery] string student)
         {

@@ -20,7 +20,7 @@ namespace RESTAPIRNSQLServer.Controllers
             _classroomService = classroomService;
             _academicService = academicService;
         }
-        //GET : api/information/classrooms/all
+        //GET : api/information/classrooms/all        
         [HttpGet("classrooms/all")]
         public async Task<ActionResult> GetAllClassrooms()
         {
@@ -33,8 +33,7 @@ namespace RESTAPIRNSQLServer.Controllers
             {
                 return StatusCode(500, "Error is occured while getting classrooms data!");
             }
-        }
-        
+        }     
         [HttpGet("classrooms/student")]
         public async Task<ActionResult> GetClassroomsByStudent([FromQuery] FilterClassroomItems filter)
         {
@@ -75,7 +74,7 @@ namespace RESTAPIRNSQLServer.Controllers
             }
         }
         [HttpGet("years")]
-        public async Task<ActionResult> GetAllAcedemicYears([FromQuery] string year)
+        public async Task<ActionResult> GetSpecifyAcedemicYear([FromQuery] string year)
         {
             try
             {
