@@ -40,8 +40,8 @@ namespace RESTAPIRNSQLServer.Controllers
         //{
         //    public IList<LessonReadDTO> ListDTO { get; set; }
         //}
-        [Authorize]
-        [AuthorizeActionFilter(Role = "Student")]
+        //[Authorize]
+        //[AuthorizeActionFilter(Role = "Student")]
         [HttpGet("id={id}")]
         public async Task<ActionResult> GetByID(int id)
         {
